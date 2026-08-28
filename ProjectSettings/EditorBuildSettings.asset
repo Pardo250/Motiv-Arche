@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1045 &1
+EditorBuildSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/LoginScene.unity
+    guid: 0e85ea792e521cf478584dfc83a36d48
+  - enabled: 1
+    path: Assets/Scenes/ForgetPassword.unity
+    guid: 71adec73b5fc1a84f80edb799a4ef6bc
+  - enabled: 1
+    path: Assets/Scenes/RegisterScene.unity
+    guid: f643c38e76099a245a811d5dc639d8eb
+  - enabled: 1
+    path: Assets/Scenes/MenuScene.unity
+    guid: 1da7c85907476a24a8aad3fa8d55e887
+  - enabled: 1
+    path: Assets/Scenes/GPSScene.unity
+    guid: 4fe1aa76532464e458622beec8a48e37
+  - enabled: 1
+    path: Assets/Scenes/ScannerScene.unity
+    guid: ff88a49cca8e5df498afedba95060e31
+  m_configObjects:
+    UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: 0ec626c5d1e7a7244bbb0bfde52bf21a,
+      type: 2}
+    UnityEditor.XR.ARKit.ARKitSettings: {fileID: 11400000, guid: 9b876f15d23eb874b878067e354677be,
+      type: 2}
+    com.unity.adaptiveperformance.loader_settings: {fileID: 11400000, guid: a7ffa2b686b9e9340800539eef293e73,
+      type: 2}
+    com.unity.adaptiveperformance.samsung.android.provider_settings: {fileID: 11400000,
+      guid: 3e45b28e084b3e843b60dcee50106749, type: 2}
+    com.unity.adaptiveperformance.simulator.provider_settings: {fileID: 11400000,
+      guid: 5f35df2bdc0fd9143be5cfa2c50edd68, type: 2}
+    com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 1eed4f301fb5671438445f3e091ffd9b,
+      type: 2}

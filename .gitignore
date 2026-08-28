@@ -1,0 +1,247 @@
+# ============================================================
+# Unity
+# ============================================================
+
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Uu]ser[Ss]ettings/
+
+*.log
+
+# Unity generated files
+sysinfo.txt
+mono_crash.*
+
+# Memory captures
+[Mm]emoryCaptures/
+
+# Recordings
+[Rr]ecordings/
+
+# Crashlytics
+crashlytics-build.properties
+
+
+# ============================================================
+# Unity Asset Store / Packages
+# ============================================================
+
+# Blender backup files
+*.blend1
+*.blend1.meta
+
+
+# ============================================================
+# IDE - Visual Studio / VS Code / Rider
+# ============================================================
+
+.vs/
+.vscode/
+.idea/
+
+# JetBrains Rider
+/[Aa]ssets/Plugins/Editor/JetBrains*
+*.DotSettings.user
+
+# Visual Studio / MonoDevelop generated files
+ExportedObj/
+.consulo/
+
+*.csproj
+*.unityproj
+*.sln
+*.slnx
+*.suo
+*.tmp
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.mdb
+*.opendb
+*.VC.db
+
+# Generated metadata
+*.pidb.meta
+*.pdb.meta
+*.mdb.meta
+
+
+# ============================================================
+# Operating System
+# ============================================================
+
+.DS_Store
+Thumbs.db
+desktop.ini
+
+
+# ============================================================
+# Builds / Packages
+# ============================================================
+
+*.apk
+*.aab
+*.unitypackage
+*.unitypackage.meta
+*.app
+
+# Android generated files
+.gradle/
+
+# Gradle generated files
+/[Aa]ssets/Plugins/Android/.gradle/
+
+
+# ============================================================
+# Unity Addressables
+# ============================================================
+
+/ServerData
+
+/[Aa]ssets/StreamingAssets/aa*
+/[Aa]ssets/AddressableAssetsData/link.xml*
+/[Aa]ssets/Addressables_Temp*
+
+/[Aa]ssets/AddressableAssetsData/*/*.bin*
+
+
+# ============================================================
+# Unity Visual Scripting
+# ============================================================
+
+/[Aa]ssets/Unity.VisualScripting.Generated/VisualScripting.Flow/UnitOptions.db
+/[Aa]ssets/Unity.VisualScripting.Generated/VisualScripting.Flow/UnitOptions.db.meta
+
+/[Aa]ssets/Unity.VisualScripting.Generated/VisualScripting.Core/Property Providers
+/[Aa]ssets/Unity.VisualScripting.Generated/VisualScripting.Core/Property Providers.meta
+
+
+# ============================================================
+# Unity Test Runner
+# ============================================================
+
+InitTestScene*.unity*
+/[Aa]ssets/[Ii]nit[Tt]est[Ss]cene*.unity*
+
+
+# ============================================================
+# Unity Scene Dependency Cache
+# ============================================================
+
+/[Aa]ssets/[Ss]ceneDependencyCache*
+
+
+# ============================================================
+# Unity temporary/generated files
+# ============================================================
+
+.utmp/
+
+
+# ============================================================
+# User-specific files
+# ============================================================
+
+*.user
+*.userprefs
+
+
+# ============================================================
+# Temporary files
+# ============================================================
+
+*.tmp
+*.temp
+*.bak
+*.swp
+*~
+
+
+# ============================================================
+# Logs / Debug
+# ============================================================
+
+*.stackdump
+
+
+# ============================================================
+# OS generated folders
+# ============================================================
+
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+$RECYCLE.BIN/
+*.lnk
+
+# Linux
+.nfs*
+
+
+# ============================================================
+# Build output folders
+# ============================================================
+
+[Bb]uild/
+[Bb]uilds/
+[Bb]uildOutput/
+[Oo]utput/
+[Dd]ist/
+
+
+# ============================================================
+# Generated documentation
+# ============================================================
+
+[Dd]ocs/_build/
+
+
+# ============================================================
+# Package manager / Node
+# ============================================================
+
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+
+# ============================================================
+# Python (if used by tools/scripts)
+# ============================================================
+
+__pycache__/
+*.py[cod]
+*$py.class
+.python-version
+.venv/
+venv/
+env/
+
+
+# ============================================================
+# Vuforia / Unity generated cache
+# ============================================================
+
+# Vuforia temporary/generated data
+/[Aa]ssets/VuforiaConfiguration.asset.tmp
+
+
+# ============================================================
+# Do NOT ignore these important Unity folders
+# ============================================================
+#
+# Assets/
+# Packages/
+# ProjectSettings/
+#
+# These folders MUST remain tracked by Git.
