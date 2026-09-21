@@ -267,7 +267,7 @@ PlayerSettings:
   AndroidEnableTango: 0
   androidEnableBanner: 1
   androidUseLowAccuracyLocation: 0
-  androidUseCustomKeystore: 1
+  androidUseCustomKeystore: 0
   m_AndroidBanners:
   - width: 320
     height: 180
@@ -928,7 +928,6 @@ PlayerSettings:
   syncCapabilities: 0
   platformCapabilities:
     WindowsStoreApps:
-      CodeGeneration: false
       OfflineMapsManagement: false
       HumanInterfaceDevice: false
       Location: false
@@ -941,6 +940,7 @@ PlayerSettings:
       InternetClientServer: false
       VideosLibrary: false
       Objects3D: false
+      InternetClient: true
       RemoteSystem: false
       BlockedChatMessages: false
       PhoneCall: false
@@ -962,7 +962,7 @@ PlayerSettings:
       RecordedCallsFolder: false
       Contacts: false
       Proximity: false
-      InternetClient: true
+      CodeGeneration: false
       BackgroundMediaPlayback: false
       EnterpriseAuthentication: false
   metroTargetDeviceFamilies:

@@ -1820,7 +1820,7 @@ public class ContenidoGPS : MonoBehaviour
     }
 
 
-    private void obtenerContenidosGPS(string poiName)
+    public void obtenerContenidosGPS(string poiName)
     {
         reiniciarContenidos();
         Debug.Log("obtener contenidos de:" + poiName);
@@ -2115,7 +2115,7 @@ public class ContenidoGPS : MonoBehaviour
         hotspot.GetComponent<Hotspot>().LocationSettings.LocationInput.Location.Label = nombre.Trim();
         hotspot.GetComponent<Hotspot>().LocationSettings.LocationInput.Location.Latitude = latitudHotspot;
         hotspot.GetComponent<Hotspot>().LocationSettings.LocationInput.Location.Longitude = longitudHotspot;
-        //TODO AQUI PODRÍA MODIFICAR EL MÉTODO PARA PASAR EL PARAMETRO DE LATITUD Y LONGITUD Y QUE SE CENTRE EL PUNTO AL MOMENTO DE ACTIVARLO 
+        //TODO AQUI PODRï¿½A MODIFICAR EL Mï¿½TODO PARA PASAR EL PARAMETRO DE LATITUD Y LONGITUD Y QUE SE CENTRE EL PUNTO AL MOMENTO DE ACTIVARLO 
         hotspot.GetComponent<Hotspot>().OnHotspotActivated.AddListener(delegate { dispararEventoHotspot(nombre.Trim()); });
 
 
