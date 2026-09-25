@@ -128,7 +128,7 @@ public class ContenidoGPS : MonoBehaviour
 
     public Slider radioActivacionSlider;
     public TextMeshProUGUI radioTextSelected;
-    private int radioActivacion = 1;
+    private int radioActivacion = 15;
 
     public TMP_Dropdown activacionAR;
 
@@ -289,6 +289,9 @@ public class ContenidoGPS : MonoBehaviour
         radioActivacionSlider.onValueChanged.AddListener(delegate { CambiarRadioActivacion(radioActivacionSlider); });
 
         activacionAR.onValueChanged.AddListener(delegate { ActivarHotspotsSeleccionados(activacionAR); });
+
+        radioActivacionSlider.value = radioActivacion;
+        radioTextSelected.text = "Radio activacion " + radioActivacion + " m";
 
         placesMarker = new List<OnlineMapsMarker>();
         rutaMarker = new List<OnlineMapsMarker>();
