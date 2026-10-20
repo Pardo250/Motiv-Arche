@@ -210,7 +210,7 @@ public class ContenidoGPS : MonoBehaviour
         public float ordenRuta;
         public string latLng;
         public string nombrePunto;
-        public bool incluirPuntoRuta;
+        public string incluirPuntoRuta; // el servidor lo envía como "0"/"1"
 
     }
 
@@ -2026,13 +2026,18 @@ public class ContenidoGPS : MonoBehaviour
                     {
                         destinoName = puntosRutaSeleccionados[i].GetNombrePunto();
                     }
+                }
 
-                    poiMarker = OnlineMapsMarkerManager.CreateItem(puntosRutaSeleccionados[i].GetLat(), puntosRutaSeleccionados[i].GetLng(), redPoi, puntosRutaSeleccionados[i].GetNombrePunto());
-                    poiMarker.scale = 1.5f;
-                    poiMarker.OnDrawTooltip = OnDrawTooltip;
-                    placesMarker.Add(poiMarker);
-                    poiTexture = "poi" + (int)puntosRutaSeleccionados[i].GetOrdenRuta();
-                    OnlineMapsMarker marker = OnlineMapsMarkerManager.CreateItem(puntosRutaSeleccionados[i].GetLat(), puntosRutaSeleccionados[i].GetLng(), Resources.Load<Texture2D>(poiTexture), puntosRutaSeleccionados[i].GetNombrePunto());
+                // Todos los puntos de la ruta llevan marcador; incluirPuntoRuta solo decide si se calcula la navegación AR hacia el punto.
+                poiMarker = OnlineMapsMarkerManager.CreateItem(puntosRutaSeleccionados[i].GetLat(), puntosRutaSeleccionados[i].GetLng(), redPoi, puntosRutaSeleccionados[i].GetNombrePunto());
+                poiMarker.scale = 1.5f;
+                poiMarker.OnDrawTooltip = OnDrawTooltip;
+                placesMarker.Add(poiMarker);
+                poiTexture = "poi" + (int)puntosRutaSeleccionados[i].GetOrdenRuta();
+                Texture2D numeroTexture = Resources.Load<Texture2D>(poiTexture);
+                if (numeroTexture != null)
+                {
+                    OnlineMapsMarker marker = OnlineMapsMarkerManager.CreateItem(puntosRutaSeleccionados[i].GetLat(), puntosRutaSeleccionados[i].GetLng(), numeroTexture, puntosRutaSeleccionados[i].GetNombrePunto());
                     marker.scale = 1.5f;
                     rutaMarker.Add(marker);
                 }
@@ -2240,7 +2245,8 @@ public class ContenidoGPS : MonoBehaviour
                     string latLngString = ordenRuta.ordenRutas[i].latLng;
                     string[] latLng = latLngString.Split(",");
                     string waypointName = ordenRuta.ordenRutas[i].nombrePunto;
-                    bool incluirPuntoRuta = ordenRuta.ordenRutas[i].incluirPuntoRuta;
+                    string incluirTexto = ordenRuta.ordenRutas[i].incluirPuntoRuta;
+                    bool incluirPuntoRuta = incluirTexto == "1" || string.Equals(incluirTexto, "true", StringComparison.OrdinalIgnoreCase);
                     Debug.Log(ordenRuta.ordenRutas[i].id + "|" + ordenRuta.ordenRutas[i].ordenRuta + "|" + ordenRuta.ordenRutas[i].latLng + "|" + ordenRuta.ordenRutas[i].nombrePunto + "|" + ordenRuta.ordenRutas[i].incluirPuntoRuta);
 
 
