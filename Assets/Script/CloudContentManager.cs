@@ -110,6 +110,7 @@ public class CloudContentManager : MonoBehaviour
         public string tipo_contenido;
         public string latitud;
         public string longitud;
+        public string radio_activacion; // metros; vacío = usar el radio general
     }
 
     [System.Serializable]

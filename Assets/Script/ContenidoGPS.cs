@@ -129,6 +129,16 @@ public class ContenidoGPS : MonoBehaviour
     public Slider radioActivacionSlider;
     public TextMeshProUGUI radioTextSelected;
     private int radioActivacion = 15;
+    // Radio propio de cada punto (columna radio_activacion); los que no aparecen usan radioActivacion.
+    private Dictionary<string, int> radiosPorPunto = new Dictionary<string, int>();
+
+    private int RadioDe(string nombre)
+    {
+        int radio;
+        if (radiosPorPunto.TryGetValue(nombre.Trim(), out radio))
+            return radio;
+        return radioActivacion;
+    }
 
     public TMP_Dropdown activacionAR;
 
@@ -359,8 +369,9 @@ public class ContenidoGPS : MonoBehaviour
             {
                 if (child.gameObject != null)
                 {
-                    child.gameObject.GetComponent<Hotspot>().HotspotSettings.ActivationRadius = this.radioActivacion;
-                    child.gameObject.GetComponent<Hotspot>().HotspotSettings.DeactivationRadius = this.radioActivacion + 5;
+                    int radio = RadioDe(child.gameObject.name);
+                    child.gameObject.GetComponent<Hotspot>().HotspotSettings.ActivationRadius = radio;
+                    child.gameObject.GetComponent<Hotspot>().HotspotSettings.DeactivationRadius = radio + 5;
                 }
             }
         }
@@ -1446,6 +1457,14 @@ public class ContenidoGPS : MonoBehaviour
                 ListaGPSContenido posGPS = JsonUtility.FromJson<ListaGPSContenido>("{\"gps\":" + www.downloadHandler.text + "}");
                 List<PosicionGeograficaContenido> resultado = posGPS.gps;
 
+                radiosPorPunto.Clear();
+                foreach (PosicionGeograficaContenido p in resultado)
+                {
+                    int radioPunto;
+                    if (!string.IsNullOrEmpty(p.radio_activacion) && int.TryParse(p.radio_activacion, out radioPunto) && radioPunto > 0)
+                        radiosPorPunto[p.name.Trim()] = radioPunto;
+                }
+
 
                 if (resultado.Count == 1)
                 {
@@ -2101,9 +2120,10 @@ public class ContenidoGPS : MonoBehaviour
 
         Hotspot.HotspotSettingsData settings = new Hotspot.HotspotSettingsData();
         settings.Prefab = prefabStar;
-        settings.ActivationRadius = radioActivacion;
+        int radio = RadioDe(nombre);
+        settings.ActivationRadius = radio;
         settings.DeactivateOnLeave = true;
-        settings.DeactivationRadius = radioActivacion + 5;
+        settings.DeactivationRadius = radio + 5;
         settings.Reactivate = true;
 
         Debug.Log("latitud hotspot>" + loc.Latitude);
