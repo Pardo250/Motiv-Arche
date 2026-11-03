@@ -31086,7 +31086,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f9052b8f1255a04b9d0402333b78a57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  autoStopUpdateOnInput: 0
+  autoStopUpdateOnInput: 1
   compassThreshold: 8
   createMarkerInUserPosition: 0
   disableEmulatorInPublish: 0
@@ -31103,11 +31103,11 @@ MonoBehaviour:
   marker3DSizeType: 0
   maxPositionCount: 3
   position: {x: 0, y: 0}
-  restoreAfter: 10
+  restoreAfter: 30
   rotateCameraByCompass: 0
   trueHeading: 0
   updateEmulatorPositionByMarker: 0
-  updatePosition: 0
+  updatePosition: 1
   useCompassForMarker: 0
   useGPSEmulator: 0
   desiredAccuracy: 5
