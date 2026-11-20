@@ -352,6 +352,12 @@ public class CreatePoi : MonoBehaviour
 
     public void crearPuntoInteres()
     {
+        if (Main.esInvitado)
+        {
+            Debug.LogWarning("Un invitado no puede crear puntos de interés.");
+            return;
+        }
+
         string name = poiName.text;
         string email = Main.email;
         bool visualizationAll = true;

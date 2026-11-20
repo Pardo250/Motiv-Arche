@@ -27,6 +27,8 @@ public class Main : MonoBehaviour
     public static List<GPSContenidos> contenidosHotspot = new List<GPSContenidos>();
     public static string email;
     public static string role;
+    public const string emailInvitado = "invitado";
+    public static bool esInvitado { get { return email == emailInvitado; } }
     
     public TMP_Dropdown languageDropdown;
 
@@ -141,6 +143,11 @@ public class Main : MonoBehaviour
         textos.Add(forgetPasswordText);
 
         traducirElementos(llaves, textos);
+
+        GameObject buttonGuest = GameObject.Find("Canvas/Background/Login/Inputs/ButtonGuest/Text");
+        string textoInvitado = obtenerValor("buttonGuest");
+        if (buttonGuest != null && textoInvitado != null)
+            buttonGuest.GetComponent<TextMeshProUGUI>().text = textoInvitado;
 
 
     }

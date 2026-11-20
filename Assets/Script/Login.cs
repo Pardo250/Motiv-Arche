@@ -68,6 +68,14 @@ public class Login : MonoBehaviour
     }
 
 
+    // Modo invitado: entra sin cuenta ni servidor. Solo consulta; no puede crear ni gestionar puntos.
+    public void loginAsGuest()
+    {
+        Main.email = Main.emailInvitado;
+        SceneManager.LoadScene("MenuScene");
+    }
+
+
     IEnumerator createRequest(WWWForm www, string uri,RawImage loadingImage, TextMeshProUGUI loadingText,RawImage closeLoadingImage,string email)
     {
         UnityWebRequest request = UnityWebRequest.Post(uri,www);
