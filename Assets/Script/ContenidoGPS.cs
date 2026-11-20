@@ -22,6 +22,16 @@ using static OnlineMapsGoogleDirections;
 public class ContenidoGPS : MonoBehaviour
 {
     public static int posicion = 0;
+    private string nombreDestinoRuta;
+    private int ultimaSolicitudRuta;
+    private bool conservarDestinoElegido;
+
+    // Estado de la ruta, solo de lectura (lo usa el simulador de recorrido del editor).
+    public List<RutaSeleccionada> PuntosRutaSeleccionados { get { return puntosRutaSeleccionados; } }
+    public string DestinoRutaActual { get { return nombreDestinoRuta; } }
+    public RouteResponse UltimaRuta { get; private set; }
+    public int RutasRecibidas { get; private set; }
+    public string UltimoErrorRuta { get; private set; }
     public static int totalElementosRuta = 0;
     public string MapboxToken = "pk.eyJ1IjoiZG1iZm0iLCJhIjoiY2tyYW9hdGMwNGt6dTJ2bzhieDg3NGJxNyJ9.qaQsMUbyu4iARFe0XB2SWg";
     public string googleMapsSinPoi = "https://maps.googleapis.com/maps/vt?pb=!1m5!1m4!1i{zoom}!2i{x}!3i{y}!4i256!2m3!1e0!2sm!3i610341528!3m17!2ses-US!3sUS!5e18!12m4!1e68!2m2!1sset!2sRoadmap!12m3!1e37!2m1!1ssmartmaps!12m4!1e26!2m2!1sstyles!2zcC52Om9uLHMudDoxfHAudjpvbixzLnQ6NXxwLnY6b24scy50OjJ8cC52Om9mZg!4e0";
@@ -529,15 +539,7 @@ public class ContenidoGPS : MonoBehaviour
             PlayOptions.SetActive(false);
         }
 
-        for (int i = 0; i < puntosRutaSeleccionados.Count; i++)
-        {
-            if (puntosRutaSeleccionados[i].GetNombrePunto().Trim().Equals(poiName))
-            {
-                posicion = i;
-                poiNameSelected.text = puntosRutaSeleccionados[i].GetOrdenRuta() + " " + poiName;
-
-            }
-        }
+        SeleccionarPuntoPorNombre(poiName);
 
 
         botonRutaAnterior.SetActive(true);
@@ -1813,15 +1815,7 @@ public class ContenidoGPS : MonoBehaviour
         obtenerContenidosGPS(poiName);
         poiNameSelected.text = poiName;
 
-        for (int i = 0; i < puntosRutaSeleccionados.Count; i++)
-        {
-            if (puntosRutaSeleccionados[i].GetNombrePunto().Trim().Equals(poiName))
-            {
-                posicion = i;
-                poiNameSelected.text = puntosRutaSeleccionados[i].GetOrdenRuta() + " " + poiName;
-
-            }
-        }
+        SeleccionarPuntoPorNombre(poiName);
 
         botonRutaAnterior.SetActive(true);
         botonRutaSiguiente.SetActive(true);
@@ -1834,13 +1828,36 @@ public class ContenidoGPS : MonoBehaviour
             botonRutaSiguiente.SetActive(false);
         }
 
-        if (calcularRutaPunto(poiName))
+        if (!poiName.Equals(nombreDestinoRuta))
         {
             calcularRutaMapbox(marker.position.x, marker.position.y, poiName);
         }
 
     }
 
+
+    // Una ruta puede repetir un mural: si el punto actual ya tiene ese nombre, se conserva la posicion.
+    private void SeleccionarPuntoPorNombre(string poiName)
+    {
+        if (conservarDestinoElegido) return;
+
+        if (posicion >= 0 && posicion < puntosRutaSeleccionados.Count &&
+            puntosRutaSeleccionados[posicion].GetNombrePunto().Trim().Equals(poiName))
+        {
+            poiNameSelected.text = puntosRutaSeleccionados[posicion].GetOrdenRuta() + " " + poiName;
+            return;
+        }
+
+        for (int i = 0; i < puntosRutaSeleccionados.Count; i++)
+        {
+            if (puntosRutaSeleccionados[i].GetNombrePunto().Trim().Equals(poiName))
+            {
+                posicion = i;
+                poiNameSelected.text = puntosRutaSeleccionados[i].GetOrdenRuta() + " " + poiName;
+                return;
+            }
+        }
+    }
 
     public void obtenerContenidosGPS(string poiName)
     {
@@ -2049,6 +2066,7 @@ public class ContenidoGPS : MonoBehaviour
 
             if (waypoints.Count > 0)
             {
+                if (originName.Equals("")) originName = puntosRutaSeleccionados[0].GetNombrePunto();
                 Debug.Log("latitud primer punto: " + origin.x + " longitud primer punto: " + origin.y);
                 calcularRutaMapbox(origin.x, origin.y, originName);
                 Debug.Log("nombre del primer punto>" + originName);
@@ -2088,11 +2106,13 @@ public class ContenidoGPS : MonoBehaviour
         OnlineMaps.instance.Redraw();
         Debug.Log("se ha detectado el punto con el nombre: " + name);
         LoadingPanel.SetActive(true);
-        loadingText.text = "se ha detectado el punto con el nombre: " + name;
+        loadingText.text = "Acabaste de llegar a: " + name;
 
         loadingImage.gameObject.SetActive(false);
         closeLoadingImage.gameObject.SetActive(true);
+        conservarDestinoElegido = true;
         obtenerContenidosGPS(name);
+        conservarDestinoElegido = false;
     }
 
 
@@ -2386,14 +2406,7 @@ public class ContenidoGPS : MonoBehaviour
 
 
 
-                    if (calcularRutaPunto(name))
-                    {
-                        calcularRutaMapbox(latitud, longitud, name);
-                    }
-                    else
-                    {
-                        centrarPosicion(longitud, latitud);
-                    }
+                    calcularRutaMapbox(latitud, longitud, name);
                 }
                 else if ((posicion + 1) == puntosRutaSeleccionados.Count)
                 {
@@ -2464,14 +2477,7 @@ public class ContenidoGPS : MonoBehaviour
                     obtenerContenidosGPS(name);
                     poiNameSelected.text = puntosRutaSeleccionados[posicion].GetOrdenRuta() + " " + name;
 
-                    if (calcularRutaPunto(name))
-                    {
-                        calcularRutaMapbox(latitud, longitud, name);
-                    }
-                    else
-                    {
-                        centrarPosicion(longitud, latitud);
-                    }
+                    calcularRutaMapbox(latitud, longitud, name);
                     if (posicion == 0)
                     {
                         botonRutaAnterior.SetActive(false);
@@ -2492,22 +2498,9 @@ public class ContenidoGPS : MonoBehaviour
     }
 
 
-    public bool calcularRutaPunto(string name)
-    {
-        bool calcular = false;
-        for (int i = 0; i < puntosRutaSeleccionados.Count; i++)
-        {
-            if (puntosRutaSeleccionados[i].GetNombrePunto().Equals(name))
-            {
-                calcular = puntosRutaSeleccionados[i].GetIncluirPuntoRuta();
-                break;
-            }
-        }
-
-        return calcular;
-    }
     public void calcularRutaMapbox(double latitud, double longitud, string name)
     {
+        nombreDestinoRuta = name;
         MapboxRoute script = MapboxRoute.GetComponent<MapboxRoute>();
         Location poi = script.Settings.RouteSettings.To.Location;
         poi.Label = name;
@@ -2523,25 +2516,50 @@ public class ContenidoGPS : MonoBehaviour
 
     }
 
+    // Mapbox termina la ruta en la calle mas cercana: la llegada se lleva a las coordenadas del mural.
+    private void AjustarLlegada(RouteResponse respuesta, Location destino, string nombre)
+    {
+        if (respuesta.routes.Count == 0 || respuesta.routes[0].legs.Count == 0) return;
+
+        var pasos = respuesta.routes[0].legs[0].steps;
+        if (pasos.Count == 0) return;
+
+        var llegada = pasos[pasos.Count - 1].maneuver;
+        llegada.location.Latitude = destino.Latitude;
+        llegada.location.Longitude = destino.Longitude;
+        llegada.instruction = "Acabaste de llegar a: " + nombre;
+    }
+
     private void loadRoute(Location _)
     {
         if (destinoMapbox != null)
         {
-            var api = new MapboxApi(MapboxToken);
+            var api = new MapboxApi(MapboxToken, MapboxApiLanguage.Spanish_Mexico);
             var loader = new RouteLoader(api);
+            int solicitud = ++ultimaSolicitudRuta;
+            Location destinoSolicitado = destinoMapbox;
+            string nombreSolicitado = nombreDestinoRuta;
             StartCoroutine(
                     loader.LoadRoute(
                         new RouteWaypoint { Type = RouteWaypointType.UserLocation },
-                        new RouteWaypoint { Type = RouteWaypointType.Location, Location = destinoMapbox },
+                        new RouteWaypoint { Type = RouteWaypointType.Location, Location = destinoSolicitado },
                         (err, res) =>
                         {
+                            // Si la persona ya eligio otro mural, esta respuesta quedo vieja.
+                            if (solicitud != ultimaSolicitudRuta) return;
+
                             if (err != null)
                             {
+                                UltimoErrorRuta = err;
                                 loadingText.text = err;
                                 loadingImage.gameObject.SetActive(false);
                                 closeLoadingImage.gameObject.SetActive(true);
                                 return;
                             }
+                            AjustarLlegada(res, destinoSolicitado, nombreSolicitado);
+                            UltimaRuta = res;
+                            UltimoErrorRuta = null;
+                            RutasRecibidas++;
                             currentPathRenderer.enabled = true;
                             MapboxRoute2.RoutePathRenderer = currentPathRenderer;
                             bool resultado = MapboxRoute2.BuildRoute(res);

@@ -163,6 +163,8 @@ namespace ARLocation.MapboxRoutes
             gameObject.SetActive(false);
         }
 
+        private bool llegoAlDestino;
+
         public override void OffCurrentTarget(SignPostEventArgs args) {}
 
         public override void OnCurrentTarget(SignPostEventArgs args) { }
@@ -175,6 +177,16 @@ namespace ARLocation.MapboxRoutes
 
             var result = step();
             update(args);
+
+            // Al llegar al destino desaparece el marcador, para que la persona sepa que ya llego.
+            if (input.IsLast && input.IsCurrentTarget && input.Distance <= OtherSettings.DeactivationDistance)
+            {
+                llegoAlDestino = true;
+            }
+            if (llegoAlDestino && FinishSignSettings.Container != null)
+            {
+                FinishSignSettings.Container.gameObject.SetActive(false);
+            }
 
             return result;
         }
